@@ -191,3 +191,4 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # email service
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "admin@bookstore.com"
