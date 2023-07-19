@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-3870%(y^dev_x=wx8atbovoy_vpigc9p6vuwjc=)0y5*bf2c=a"
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DJANGO_DEBUG")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -45,6 +49,8 @@ INSTALLED_APPS = [
     # auth
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     # local
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
@@ -163,6 +169,25 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+    "web": {
+        "client_id": "199763755538-96uo0jjipd2jq1obgpnf14p6oq19eho3.apps.googleusercontent.com",
+        "project_id": "temporal-clover-393216",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": "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",
+        "redirect_uris": [
+            "http://127.0.0.1:8000/accounts/google/login/callback/"
+        ],
+        "javascript_origins": [
+            "http://127.0.0.1:8000"
+        ]
+    }
+    }
+}
 
 # email service
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
