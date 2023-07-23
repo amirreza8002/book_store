@@ -1,0 +1,3 @@
+remember to change database settings
+change SECRET_KEY and DEBUG settings
+fix the database for chapter 11
