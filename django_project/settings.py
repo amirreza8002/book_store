@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    # debug
+    "debug_toolbar",
     # local
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
@@ -58,6 +60,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -65,6 +68,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = "django_project.urls"
@@ -198,3 +203,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # email service
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# IP
+INTERNAL_IPS = ["127.0.0.1",]
+
+# cache
+CACHE_MIDDLEWARE_ALIAS = "defaults"
+CACHE_MIDDLEWARE_SECONDS = 604800
+CACHE_MIDDLEWARE_KEY_PREFIX = ""
