@@ -1,0 +1,4 @@
+remember to change database settings
+change SECRET_KEY and DEBUG settings
+fix the database for chapter 11
+INTERNAL_IPS doesn't work for docker, look at page 245 and fix it
