@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     # debug
     "debug_toolbar",
+    # security
+    "admin_honeypot",
     # local
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
