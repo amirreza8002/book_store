@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG")
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -145,7 +145,11 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STORAGE = {
+    "default": {
+        "django.contrib.staticfiles.storage.StaticFilesStorage",
+    }
+}
 
 
 # media file setting
@@ -184,20 +188,16 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-    "web": {
-        "client_id": "199763755538-96uo0jjipd2jq1obgpnf14p6oq19eho3.apps.googleusercontent.com",
-        "project_id": "temporal-clover-393216",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_secret": "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",
-        "redirect_uris": [
-            "http://127.0.0.1:8000/accounts/google/login/callback/"
-        ],
-        "javascript_origins": [
-            "http://127.0.0.1:8000"
-        ]
-    }
+        "web": {
+            "client_id": "199763755538-96uo0jjipd2jq1obgpnf14p6oq19eho3.apps.googleusercontent.com",
+            "project_id": "temporal-clover-393216",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_secret": "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",
+            "redirect_uris": ["http://127.0.0.1:8000/accounts/google/login/callback/"],
+            "javascript_origins": ["http://127.0.0.1:8000"],
+        }
     }
 }
 
@@ -208,6 +208,7 @@ DEFAULT_FROM_EMAIL = "admin@bookstore.com"
 
 
 import socket
+
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 
@@ -215,3 +216,16 @@ INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 CACHE_MIDDLEWARE_ALIAS = "default"
 CACHE_MIDDLEWARE_SECONDS = 604800
 CACHE_MIDDLEWARE_KEY_PREFIX = ""
+
+# SSL settings (turn off in development
+SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
+
+# HSTS settings
+SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+    "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
+)
+SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
+
+SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
+CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)

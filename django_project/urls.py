@@ -21,15 +21,13 @@ from django.urls import path, include
 
 urlpatterns = [
     # admin
-    path("admin/", admin.site.urls),
+    path("dj-admin-site/", admin.site.urls),
     # user management
     path("accounts/", include("allauth.urls")),
     # local apps
     path("", include("pages.urls")),
     path("books/", include("books.urls")),
-] + static(
-    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns = [

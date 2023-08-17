@@ -45,8 +45,7 @@ class BookTest(TestCase):
         self.client.logout()
         response = self.client.get(reverse("book_list"))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(
-            response, "%s?next=/books/" % (reverse("account_login")))
+        self.assertRedirects(response, "%s?next=/books/" % (reverse("account_login")))
         response = self.client.get("%s?next=/books/" % (reverse("account_login")))
         self.assertContains(response, "Log In")
 

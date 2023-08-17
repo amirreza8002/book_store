@@ -15,6 +15,12 @@ services:
       - POSTGRES_PASSWORD=postgres
       - "DJANGO_SECRET_KEY=django-insecure-3870%(y^dev_x=wx8atbovoy_vpigc9p6vuwjc=)0y5*bf2c=a"
       - "DJANGO_DEBUG=True"
+      - "DJANGO_SECURE_SSL_REDIRECT=False"
+      - "DJANGO_SECURE_HSTS_SECONDS=0"
+      - "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False"
+      - "DJANGO_SECURE_HSTS_PRELOAD=False"
+      - "DJANGO_SESSION_COOKIE_SECURE=False"
+      - "DJANGO_CSRF_COOKIE_SECURE=False"
 
     depends_on:
       - db
